@@ -8,6 +8,7 @@ django = "*"
 django-environ = "*"
 django-extensions = "*"
 django-debug-toolbar = "*"
+django-ordered-model = "*"
 
 [dev-packages]
 black = "*"
