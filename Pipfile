@@ -9,6 +9,9 @@ django-environ = "*"
 django-extensions = "*"
 django-debug-toolbar = "*"
 django-ordered-model = "*"
+psycopg2-binary = "*"
+django-on-heroku = "*"
+gunicorn = "*"
 
 [dev-packages]
 black = "*"
