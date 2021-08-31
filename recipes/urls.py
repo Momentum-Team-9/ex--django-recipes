@@ -24,6 +24,7 @@ urlpatterns = [
     path("", core_views.recipe_list, name="homepage"),
     path("recipes/", core_views.recipe_list, name="recipe_list"),
     path("admin/", admin.site.urls),
+    path("accounts/", include("registration.backends.simple.urls")),
 ]
 
 if settings.DEBUG:

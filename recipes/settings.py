@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "registration",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -171,3 +172,7 @@ LOGGING = {
 # Configure Django App for Heroku
 django_on_heroku.settings(locals())
 del DATABASES["default"]["OPTIONS"]["sslmode"]
+
+# django-registration-redux
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
