@@ -142,15 +142,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "core.User"
 
 # https://docs.djangoproject.com/en/3.2/topics/logging/
+# These specific settings allow us to see the SQL queries being performed with each request
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "django.db.backends": {
-        "level": "DEBUG",
-        "handlers": {
-            "console": {
-                "class": "logging.StreamHandler",
-            },
-        },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "django.db.backends": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+        }
     },
 }
