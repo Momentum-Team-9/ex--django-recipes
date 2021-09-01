@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.db.models.constraints import UniqueConstraint
 from ordered_model.models import OrderedModel
 
 
@@ -50,3 +51,14 @@ class RecipeStep(OrderedModel):
 
     def __str__(self):
         return f"{self.order} {self.text}"
+
+
+class MealPlan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="meal_plans")
+    date = models.DateField(verbose_name="Date for plan")
+    recipes = models.ManyToManyField(to=Recipe, related_name="meal_plans")
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=["user", "date"], name="unique_user_date")
+        ]
