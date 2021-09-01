@@ -23,6 +23,13 @@ from core import views as core_views
 urlpatterns = [
     path("", core_views.recipe_list, name="homepage"),
     path("recipes/", core_views.recipe_list, name="recipe_list"),
+    path("recipes/new", core_views.add_recipe, name="add_recipe"),
+    path("recipes/<int:pk>", core_views.recipe_detail, name="recipe_detail"),
+    path(
+        "recipes/<int:recipe_pk>/ingredients",
+        core_views.add_ingredient,
+        name="add_ingredient",
+    ),
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),
 ]
