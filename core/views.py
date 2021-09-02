@@ -55,7 +55,17 @@ def recipe_detail(request, pk):
 
 
 def add_ingredient(request, recipe_pk):
-    pass
+    recipe = get_object_or_404(request.user.recipes, pk=recipe_pk)
+
+    if request.method == "POST":
+        form = IngredientForm(data=request.POST)
+
+        if form.is_valid():
+            ingredient = form.save(commit=False)
+            ingredient.recipe = recipe
+            ingredient.save()
+
+    return render("recipe_detail", pk=recipe.pk)
 
 
 @login_required

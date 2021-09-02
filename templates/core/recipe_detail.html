@@ -41,6 +41,10 @@
 </div>
 {% endif %}
 
+
+{% comment %} https://docs.djangoproject.com/en/3.2/ref/templates/builtins/#include {% endcomment %}
+{% include 'core/_add_ingredient.html' %}
+
 <h3>Ingredients ({{ recipe.num_ingredients }})</h3>
 
 <ul>
