@@ -30,6 +30,13 @@ urlpatterns = [
         core_views.add_ingredient,
         name="add_ingredient",
     ),
+    path("mealplan/", core_views.show_meal_plan, name="todays_meal_plan"),
+    path(
+        "mealplan/<int:year>/<int:month>/<int:day>/",
+        core_views.show_meal_plan,
+        name="show_meal_plan",
+    ),
+    path("mealplan/add-remove/", core_views.meal_plan_add_remove_recipe),
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),
 ]
