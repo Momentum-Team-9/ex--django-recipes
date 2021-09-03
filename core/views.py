@@ -33,7 +33,7 @@ def add_recipe(request):
             recipe.author = request.user
             recipe.save()
             messages.success(request, "Recipe added!")
-            return redirect("recipe_list")
+            return redirect("recipe_detail", pk=recipe.pk)
 
     else:
         form = RecipeForm()
@@ -65,7 +65,7 @@ def add_ingredient(request, recipe_pk):
             ingredient.recipe = recipe
             ingredient.save()
 
-    return render("recipe_detail", pk=recipe.pk)
+    return redirect("recipe_detail", pk=recipe.pk)
 
 
 @login_required
