@@ -109,14 +109,9 @@ def show_meal_plan(request, year=None, month=None, day=None):
 def meal_plan_add_remove_recipe(request):
     date = request.POST.get("date")
     recipe_pk = request.POST.get("pk")
-    action = request.POST.get("action")
-
     meal_plan, _ = request.user.meal_plans.get_or_create(date=date)
     recipe = Recipe.objects.for_user(request.user).get(pk=recipe_pk)
 
-    if action == "add":
-        meal_plan.recipes.add(recipe)
-    elif action == "remove":
-        meal_plan.recipes.remove(recipe)
+    meal_plan.add_or_remove_recipe(recipe)
 
     return HttpResponse(status=204)

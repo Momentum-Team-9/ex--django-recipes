@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block js %}
+<script src={% static 'js/vendor/dragula.min.js' %} ></script>
+<script src={% static 'js/vendor/moment.min.js' %} ></script>
+<script src={% static 'js/mealplan.js' %} defer></script>
+{% endblock js %}
+
 {% block content %}
 <h1>Meal plan for {{ date }}</h1>
 
@@ -10,8 +18,8 @@
 
 <div class="flex">
 <div class="w-50 pr3 flex flex-column">
-  <h2>Recipes to make</h2>
-  <div id="meal-plan" class="flex-auto">
+  <h2>The Plan</h2>
+  <div id="meal-plan" class="flex-auto ba b--dark-blue-30" data-date="{{ plan.date }}">
   {% for recipe in plan.recipes.all %}
     <div class="pa2 ba bw1 mb2" style="cursor: move" data-pk="{{ recipe.pk }}">{{ recipe.title }}</div>
   {% endfor %}
@@ -19,8 +27,8 @@
 </div>
 
 <div class="w-50 flex flex-column">
-  <h2>Available recipes</h2>
-  <div id="recipes" class="flex-auto">
+  <h2>👈 Drag a Recipe to Add</h2>
+  <div id="recipes" class="flex-auto" data-add-remove-url={% url 'add_remove_recipe' %}>
   {% for recipe in recipes.all %}
     <div class="pa2 ba bw1 mb2" style="cursor: move" data-pk="{{ recipe.pk }}">{{ recipe.title }}</div>
   {% endfor %}
@@ -29,33 +37,4 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
-<script>
-  const date = '{{ date|date:"Y-m-d" }}'
 
-  dragula([
-    document.getElementById("meal-plan"),
-    document.getElementById("recipes")
-  ])
-  .on('drop', (el, target, source, sibling) => {
-    if (target === source) {
-      return
-    }
-
-    const formData = new FormData()
-    formData.append("pk", el.dataset.pk)
-    formData.append("date", date)
-
-    if (target.id === "meal-plan") {
-      formData.append("action", "add")
-    } else if (target.id === "recipes") {
-      formData.append("action", "remove")
-    }
-
-    fetch('/mealplan/add-remove/', {
-      body: formData,
-      method: 'POST'
-    }).then(() => {})
-  })
-</script>
-{% endblock %}

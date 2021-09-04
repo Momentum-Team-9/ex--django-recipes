@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.constraints import UniqueConstraint
 from ordered_model.models import OrderedModel
+from django_toggle_m2m.toggle import ToggleManyToMany
 
 
 class User(AbstractUser):
@@ -68,12 +69,17 @@ class RecipeStep(OrderedModel):
         return f"{self.order} {self.text}"
 
 
-class MealPlan(models.Model):
+class MealPlan(models.Model, ToggleManyToMany):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="meal_plans")
     date = models.DateField(verbose_name="Date for plan")
     recipes = models.ManyToManyField(to=Recipe, related_name="meal_plans")
+
+    TOGGLEABLE_FIELDS = ("recipes",)
 
     class Meta:
         constraints = [
             UniqueConstraint(fields=["user", "date"], name="unique_user_date")
         ]
+
+    def add_or_remove_recipe(self, recipe):
+        self.toggle_recipes(instance=recipe)

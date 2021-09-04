@@ -13,6 +13,7 @@ psycopg2-binary = "*"
 django-on-heroku = "*"
 gunicorn = "*"
 django-registration-redux = "*"
+django-toggle-m2m = "*"
 
 [dev-packages]
 black = "*"
