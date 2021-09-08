@@ -14,6 +14,9 @@ django-on-heroku = "*"
 gunicorn = "*"
 django-registration-redux = "*"
 django-toggle-m2m = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [dev-packages]
 black = "*"

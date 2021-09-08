@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "debug_toolbar",
     "ordered_model",
+    "rest_framework",
     "core",
 ]
 
@@ -180,3 +181,9 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True
 REGISTRATION_FORM = "core.forms.CustomRegistrationForm"
 LOGIN_REDIRECT_URL = "/"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+    ]
+}
