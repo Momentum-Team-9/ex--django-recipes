@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from ordered_model.admin import OrderedModelAdmin
 
-from .models import Ingredient, MealPlan, Recipe, RecipeStep, User
+from .models import Ingredient, MealPlan, Recipe, RecipeStep, Tag, User
 
 
 class RecipeStepAdmin(OrderedModelAdmin):
@@ -14,3 +14,4 @@ admin.site.register(Recipe)
 admin.site.register(Ingredient)
 admin.site.register(RecipeStep, RecipeStepAdmin)
 admin.site.register(MealPlan)
+admin.site.register(Tag)

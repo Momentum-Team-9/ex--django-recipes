@@ -14,6 +14,13 @@ class User(AbstractUser):
         return f"<User username={self.username} pk={self.pk}>"
 
 
+class Tag(models.Model):
+    tag = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.tag
+
+
 # https://docs.djangoproject.com/en/3.2/topics/db/managers/#adding-extra-manager-methods
 class RecipeManager(models.Manager):
     def for_user(self, user):
@@ -37,6 +44,7 @@ class Recipe(models.Model):
     favorited_by = models.ManyToManyField(
         User, related_name="favorite_recipes", blank=True
     )
+    tags = models.ManyToManyField(to=Tag, related_name="recipes", blank=True)
 
     def total_time_in_minutes(self):
         if self.cook_time_in_minutes is None or self.prep_time_in_minutes is None:
