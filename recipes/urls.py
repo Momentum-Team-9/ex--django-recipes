@@ -18,7 +18,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework.routers import SimpleRouter
 from core import views as core_views
+from api.views import RecipeViewSet
+
+recipe_router = SimpleRouter()
+recipe_router.register("api/recipes", RecipeViewSet, basename="recipe")
 
 urlpatterns = [
     path("", core_views.recipe_list, name="homepage"),
@@ -44,7 +49,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),
     path("api-auth/", include("rest_framework.urls")),
-]
+] + recipe_router.urls
+
 
 if settings.DEBUG:
     import debug_toolbar
