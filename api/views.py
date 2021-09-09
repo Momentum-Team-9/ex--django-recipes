@@ -7,3 +7,7 @@ from .serializers import RecipeSerializer
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+
+    def perform_create(self, serializer):
+        # add the associated user to this recipe obj
+        serializer.save(author=self.request.user)
